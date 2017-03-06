@@ -1,7 +1,35 @@
 <div class="row" style="margin: 0;" data-ng-controller="landPadController as lp">
-    <div class="col-md-12">
-        <div class="col-md-8" style="margin: auto;height: 600px; background: #326ecc;">
+    <div class="col-md-12" style="background: #e1e1e1;">
+        <div class="col-md-8" style="margin: auto;float: none; background: #454545;">
+            <div class="row" style="margin: 0;">
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <h1 style="color: #fff;font-size: 72px;">
+                       <img src="https://image.flaticon.com/icons/svg/123/123497.svg" width="100px"> Cricket Trivia
+                    </h1>
+                </div>
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <p style="color: #fff;font-size: 20px;">
+                        Think you know about cricket? Try answering the questions below to find out how good you are...
+                    </p>
+                </div>
 
+            </div>
+            <div class="row" style="margin: 0;">
+                <div class="col-md-12" style="padding: 0 30px;">
+                    <p style="color: #fff;font-size: 24px;">
+                        Questions
+                    </p>
+                </div>
+                <div class="col-md-12" style="padding: 0 30px;">
+                    <div class="row question" style="margin: 20px 0;background: #fff;" data-ng-repeat="question in lp.questions">
+                        <div class="col-md-12" style="padding: 30px;">
+                            <p style="color: #343434;font-size: 18px;">
+                                Whos is the highest scoring crickter ever?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

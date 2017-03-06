@@ -6,6 +6,23 @@ landPadController.$inject = ['$location', 'masterFactory', '$filter', '$uibModal
 function landPadController ($location, masterFactory, $filter, $uibModal, $scope, $route, $rootScope) {
     var lp = this;
     lp.message = 'This is the header of the page.';
+    lp.questions = [
+        {
+            Q: "Who is the highest scoring cricketer ever?"
+        },
+        {
+            Q: "Who is the highest scoring cricketer ever?"
+        },
+        {
+            Q: "Who is the highest scoring cricketer ever?"
+        },
+        {
+            Q: "Who is the highest scoring cricketer ever?"
+        },
+        {
+            Q: "Who is the highest scoring cricketer ever?"
+        }
+    ]
 }
 angular.module('index').config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
