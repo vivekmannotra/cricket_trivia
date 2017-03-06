@@ -1,0 +1,31 @@
+<style>
+    .input-group {
+        color: #373737;
+    }
+</style>
+<div class="modal-header">
+    <h1 class="modal-title">
+        <span class="fa fa-envelope"></span>
+        Send Email
+        <span style="font-size: 14px;cursor: pointer;" class="glyphicon glyphicon-remove pull-right active-btn" data-ng-click="$close()"></span>
+    </h1>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin: 0;padding: 0 20px;">
+        <div class="col-md-12" style="padding: 10px 0;">
+            <div class="col-md-2">
+                Send To :
+            </div>
+            <div class="col-md-3">
+                <input type="email" data-ng-model="toEmail" class="form-control input-group" placeholder="Enter Email Address">
+            </div>
+        </div>
+        <div class="col-md-12" style="background: #ccc;padding: 10px;max-height: 600px;overflow: scroll;" data-ng-include="selectedTemplate">
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-info not-round" type="button" data-ng-click="$close()">Cancel</button>
+    <button class="btn btn-info not-round" type="button" data-ng-click="sendEmail(toEmail)">Send</button>
+</div>
