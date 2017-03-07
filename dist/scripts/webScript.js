@@ -1,28 +1,182 @@
 'use strict';
-angular.module('index', ['ui.bootstrap', 'index.landPad', 'ngRoute', 'truncate']);
+angular.module('index', ['ui.bootstrap', 'index.landPad', 'index.scoreCard', 'ngRoute', 'chart.js', 'truncate']);
 angular.module('index.landPad', []);
 angular.module('index.landPad').controller('landPadController', landPadController);
-landPadController.$inject = ['$location', 'masterFactory', '$filter', '$uibModal', '$scope', '$route', '$rootScope'];
-function landPadController ($location, masterFactory, $filter, $uibModal, $scope, $route, $rootScope) {
+landPadController.$inject = ['$location', 'masterFactory', '$filter', '$uibModal', '$scope', '$route', '$rootScope', '$anchorScroll'];
+function landPadController ($location, masterFactory, $filter, $uibModal, $scope, $route, $rootScope, $anchorScroll) {
     var lp = this;
     lp.message = 'This is the header of the page.';
     lp.questions = [
         {
-            Q: "Who is the highest scoring cricketer ever?"
+            id: "q1",
+            question: "Who is the highest scoring cricketer ever?",
+            correct_answer : "qa11",
+            answers : [
+                {
+                    value: "qa11",
+                    id: "qa11"
+                },
+                {
+                    value: "qa12",
+                    id: "qa12"
+                },
+                {
+                    value: "qa13",
+                    id: "qa13"
+                }
+            ]
         },
         {
-            Q: "Who is the highest scoring cricketer ever?"
+            id: "q2",
+            question: "Who is the highest scoring cricketer ever?",
+            correct_answer : "qa21",
+            answers : [
+                {
+                    value: "qa21",
+                    id: "qa21"
+                },
+                {
+                    value: "qa22",
+                    id: "qa22"
+                },
+                {
+                    value: "qa23",
+                    id: "qa23"
+                }
+            ]
+
         },
         {
-            Q: "Who is the highest scoring cricketer ever?"
+            id: "q3",
+            question: "Who is the highest scoring cricketer ever?",
+            correct_answer : "qa31",
+            answers : [
+                {
+                    value: "qa31",
+                    id: "qa31"
+                },
+                {
+                    value: "qa32",
+                    id: "qa32"
+                },
+                {
+                    value: "qa33",
+                    id: "qa33"
+                }
+            ]
         },
         {
-            Q: "Who is the highest scoring cricketer ever?"
+            id: "q4",
+            question: "Who is the highest scoring cricketer ever?",
+            correct_answer : "qa41",
+            answers : [
+                {
+                    value: "qa41",
+                    id: "qa41"
+                },
+                {
+                    value: "qa42",
+                    id: "qa42"
+                },
+                {
+                    value: "qa43",
+                    id: "qa43"
+                }
+            ]
         },
         {
-            Q: "Who is the highest scoring cricketer ever?"
+            id: "q5",
+            question: "Who is the highest scoring cricketer ever?",
+            correct_answer : "qa51",
+            answers : [
+                {
+                    value: "qa51",
+                    id: "qa51"
+                },
+                {
+                    value: "qa52",
+                    id: "qa52"
+                },
+                {
+                    value: "qa53",
+                    id: "qa53"
+                }
+            ]
         }
-    ]
+    ];
+    lp.evaluate = function () {
+        for (var i in lp.questions) {
+            lp.questions[i].first_off = 0;
+            lp.questions[i].warn = !lp.questions[i].user_answer;
+        }
+        var first_offender = _.find(lp.questions, function (ques) {
+            return ques.warn;
+        });
+        if (first_offender) {
+            var old = $location.hash();
+            first_offender.first_off = 1;
+            $location.hash(first_offender.id);
+            $anchorScroll.yOffset = "50px";
+            $anchorScroll();
+            $location.hash(old);
+        } else {
+            masterFactory.result = getScore();
+            $location.path('/scoreCard');
+        }
+    };
+    function getScore () {
+        var result = {
+            total: 0,
+            correct: 0,
+            incorrect: 0
+        };
+        for (var i in lp.questions) {
+            result.total ++;
+            if (lp.questions[i].user_answer === lp.questions[i].correct_answer) {
+                result.correct ++;
+            } else {
+                result.incorrect ++;
+            }
+        }
+        result.answer_sheet = angular.copy(lp.questions);
+        return result;
+    }
+    lp.checkQuestion = function (question) {
+        if (question.user_answer) {
+            question.warn = false;
+            question.first_off = 0;
+        }
+    };
+    lp.resetForm = function () {
+
+    };
+}
+angular.module('index.scoreCard', []);
+angular.module('index.scoreCard').controller('scoreCardController', scoreCardController);
+scoreCardController.$inject = ['$location', 'masterFactory', '$filter', '$uibModal', '$scope', '$route', '$rootScope'];
+function scoreCardController ($location, masterFactory, $filter, $uibModal, $scope, $route, $rootScope) {
+    var sc = this;
+    function activate () {
+        sc.result = masterFactory.result;
+        if (!sc.result) {
+            $location.path('/home');
+        } else {
+            sc.charts = {
+                bar: {
+                    labels: ['Correct', 'Incorrect'],
+                    series: ['Correct', 'Incorrect'],
+                    data: [
+                        [sc.result.correct, sc.result.incorrect]
+                    ]
+                }
+            }
+        }
+    }
+    activate ();
+    sc.repeat = function () {
+        masterFactory.result = 0;
+        $location.path('/home');
+    };
 }
 angular.module('index').config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -31,6 +185,9 @@ angular.module('index').config(['$routeProvider', '$locationProvider', '$httpPro
         })
         .when('/home', {
             templateUrl: 'modules/landPad/landPad.html'
+        })
+        .when('/scoreCard', {
+            templateUrl: 'modules/scoreCard/scoreCard.html'
         })
         .otherwise({
             redirectTo: '/home'

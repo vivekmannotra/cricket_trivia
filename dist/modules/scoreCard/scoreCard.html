@@ -1,0 +1,30 @@
+<div class="row" style="margin: 0;" data-ng-controller="scoreCardController as sc">
+    <div class="col-md-12" style="background: #e1e1e1;">
+        <div class="col-md-8" style="margin: auto;float: none; background: #222222;">
+            <div class="row" style="margin: 0;">
+                <div class="col-md-12" style="padding: 40px 30px 20px 30px;">
+                    <h1 style="color: #fff;font-size: 72px;">
+                        <img src="https://image.flaticon.com/icons/svg/123/123497.svg" width="100px"> Cricket Trivia
+                    </h1>
+                </div>
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <p style="color: #fff;font-size: 44px;">
+                        Score Card
+                    </p>
+                    <p style="color: #fff;font-size: 24px;">Total Questions : {{sc.result.total}}</p>
+                    <p style="color: #fff;font-size: 24px;">Correct Answers : {{sc.result.correct}}</p>
+                    <p style="color: #fff;font-size: 24px;">Incorrect Answers : {{sc.result.incorrect}}</p>
+                </div>
+                <div class="col-md-8" style="padding: 40px 30px;">
+                    <div class="row" style="margin: 0;background: #fff;padding: 30px;">
+                        <canvas id="bar" class="chart chart-bar"
+                                chart-data="sc.charts.bar.data" chart-labels="sc.charts.bar.labels" chart-series="sc.charts.bar.series"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <button class="btn btn-success btn-lg not-round" data-ng-click="sc.repeat()"><span class="fa fa-refresh"></span> Try Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

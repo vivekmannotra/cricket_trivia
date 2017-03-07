@@ -1,6 +1,17 @@
+<style>
+    .option:hover {
+        color: #ffffff;
+        background: #353535;
+        cursor: pointer;
+    }
+    .warn {
+        border: 1px solid #ffdddd;
+        box-shadow: 3px 3px 7px 0px #ff4a4a;
+    }
+</style>
 <div class="row" style="margin: 0;" data-ng-controller="landPadController as lp">
     <div class="col-md-12" style="background: #e1e1e1;">
-        <div class="col-md-8" style="margin: auto;float: none; background: #454545;">
+        <div class="col-md-8" style="margin: auto;float: none; background: #222222;">
             <div class="row" style="margin: 0;">
                 <div class="col-md-12" style="padding: 40px 30px;">
                     <h1 style="color: #fff;font-size: 72px;">
@@ -14,22 +25,42 @@
                 </div>
 
             </div>
-            <div class="row" style="margin: 0;">
-                <div class="col-md-12" style="padding: 0 30px;">
-                    <p style="color: #fff;font-size: 24px;">
-                        Questions
-                    </p>
-                </div>
-                <div class="col-md-12" style="padding: 0 30px;">
-                    <div class="row question" style="margin: 20px 0;background: #fff;" data-ng-repeat="question in lp.questions">
-                        <div class="col-md-12" style="padding: 30px;">
-                            <p style="color: #343434;font-size: 18px;">
-                                Whos is the highest scoring crickter ever?
-                            </p>
+            <form name="cricForm">
+                <div class="row" style="margin: 0;">
+                    <div class="col-md-12" style="padding: 0 30px;">
+                        <p style="color: #fff;font-size: 24px;">
+                            Questions
+                        </p>
+                    </div>
+                    <div class="col-md-12" style="padding: 0 30px;">
+                        <div class="row question animated slideInDown {{question.warn ? 'warn':''}}" id="{{question.id}}" style="margin: 20px 0;padding-bottom: 20px;background: #fff;" data-ng-repeat="question in lp.questions">
+                            <div class="col-md-12" style="padding: 30px 30px 0 30px;" data-ng-if="question.first_off">
+                                <div class="alert alert-danger" style="margin: 0;" role="alert">
+                                    <strong>You need to answer this question before you can see the result...</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="padding: 30px;">
+                                <p style="color: #343434;font-size: 18px;">
+                                    {{question.question}}
+                                </p>
+                            </div>
+                            <div class="col-md-6" data-ng-repeat="answer in question.answers">
+                                <div class="row option" style="margin: 0;padding: 0 30px;">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" data-ng-change="lp.checkQuestion(question)" data-ng-model="question.user_answer" data-ng-value="answer.id">{{answer.value}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-12" style="padding: 20px 30px 50px 30px;">
+                        <button class="btn btn-warning not-round btn-lg" data-ng-click="lp.resetForm()"><span class="fa fa-repeat"></span> Reset</button>
+                        <button class="btn btn-primary not-round btn-lg" data-ng-click="lp.evaluate()"><span class="fa fa-pencil-square-o"></span> Get Result</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
