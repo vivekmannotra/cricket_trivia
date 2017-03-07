@@ -9,97 +9,232 @@ function landPadController ($location, masterFactory, $filter, $uibModal, $scope
     lp.questions = [
         {
             id: "q1",
-            question: "Who is the highest scoring cricketer ever?",
-            correct_answer : "qa11",
+            question: "Which cricketers have the record for the highest run patnership at the World Cup ?",
+            correct_answer : "qa12",
             answers : [
                 {
-                    value: "qa11",
+                    value: "Sachin Tendulkar and Saurav Ganguly",
                     id: "qa11"
                 },
                 {
-                    value: "qa12",
+                    value: "Saurav Ganguly and Rahul Dravid",
                     id: "qa12"
                 },
                 {
-                    value: "qa13",
+                    value: "Saurav Ganguly and Virender Sehwag",
                     id: "qa13"
+                },
+                {
+                    value: "Rahul Dravid and Sachin Tendulkar",
+                    id: "qa14"
                 }
             ]
         },
         {
             id: "q2",
-            question: "Who is the highest scoring cricketer ever?",
-            correct_answer : "qa21",
+            question: "Against which country did India score their lowest total at the World Cup ?",
+            correct_answer : "qa24",
             answers : [
                 {
-                    value: "qa21",
+                    value: "West Indies",
                     id: "qa21"
                 },
                 {
-                    value: "qa22",
+                    value: "England",
                     id: "qa22"
                 },
                 {
-                    value: "qa23",
+                    value: "New Zealand",
                     id: "qa23"
+                },
+                {
+                    value: "Australia",
+                    id: "qa24"
                 }
             ]
 
         },
         {
             id: "q3",
-            question: "Who is the highest scoring cricketer ever?",
-            correct_answer : "qa31",
+            question: "Who was the wicket-keeper of the Indian Cricket Team during the World Cup 2003 tournament?",
+            correct_answer : "qa33",
             answers : [
                 {
-                    value: "qa31",
+                    value: "Parthiv Patel",
                     id: "qa31"
                 },
                 {
-                    value: "qa32",
+                    value: "Nayan Mongia",
                     id: "qa32"
                 },
                 {
-                    value: "qa33",
+                    value: "Rahul Dravid",
                     id: "qa33"
+                },
+                {
+                    value: "Mahendra Singh Dhoni",
+                    id: "qa34"
                 }
             ]
         },
         {
             id: "q4",
-            question: "Who is the highest scoring cricketer ever?",
-            correct_answer : "qa41",
+            question: "In which year were the World Cup matches reduced to 50 overs from the previous 60 overs?",
+            correct_answer : "qa44",
             answers : [
                 {
-                    value: "qa41",
+                    value: "1983",
                     id: "qa41"
                 },
                 {
-                    value: "qa42",
+                    value: "1979",
                     id: "qa42"
                 },
                 {
-                    value: "qa43",
+                    value: "1992",
                     id: "qa43"
+                },
+                {
+                    value: "1987",
+                    id: "qa44"
                 }
             ]
         },
         {
             id: "q5",
-            question: "Who is the highest scoring cricketer ever?",
-            correct_answer : "qa51",
+            question: "Which cricketer has the best bowling figures in an innings at the World Cup ?",
+            correct_answer : "qa52",
             answers : [
                 {
-                    value: "qa51",
+                    value: "Ajit Agarkar",
                     id: "qa51"
                 },
                 {
-                    value: "qa52",
+                    value: "Ashish Nehra",
                     id: "qa52"
                 },
                 {
-                    value: "qa53",
+                    value: "Kapil Dev",
                     id: "qa53"
+                },
+                {
+                    value: "V Prasad",
+                    id: "qa54"
+                }
+            ]
+        },
+        {
+            id: "q6",
+            question: "How many runs did India make in its historic World Cup win over West Indies in 1983?",
+            correct_answer : "qa63",
+            answers : [
+                {
+                    value: "374",
+                    id: "qa61"
+                },
+                {
+                    value: "175",
+                    id: "qa62"
+                },
+                {
+                    value: "183",
+                    id: "qa63"
+                },
+                {
+                    value: "259",
+                    id: "qa64"
+                }
+            ]
+        },
+        {
+            id: "q7",
+            question: "Against which country did India score their highest total at the World Cup?",
+            correct_answer : "qa71",
+            answers : [
+                {
+                    value: "Bermuda",
+                    id: "qa71"
+                },
+                {
+                    value: "Kenya",
+                    id: "qa72"
+                },
+                {
+                    value: "Sri Lanka",
+                    id: "qa73"
+                },
+                {
+                    value: "Namibia",
+                    id: "qa74"
+                }
+            ]
+        },
+        {
+            id: "q8",
+            question: "Which cricketer has scored the most ducks at the World Cup ?",
+            correct_answer : "qa83",
+            answers : [
+                {
+                    value: "Ajit Agarkar",
+                    id: "qa81"
+                },
+                {
+                    value: "Sachin Tendulkar",
+                    id: "qa82"
+                },
+                {
+                    value: "K Srikkanth",
+                    id: "qa83"
+                },
+                {
+                    value: "J Srinath",
+                    id: "qa84"
+                }
+            ]
+        },
+        {
+            id: "q9",
+            question: "Who was the highest wicket taker for India during the historic 1993 Prudential World Cup held in England?",
+            correct_answer : "qa94",
+            answers : [
+                {
+                    value: "Ravi Shashtri",
+                    id: "qa91"
+                },
+                {
+                    value: "Kapil Dev",
+                    id: "qa92"
+                },
+                {
+                    value: "Sandeep Patil",
+                    id: "qa93"
+                },
+                {
+                    value: "Roger Binny",
+                    id: "qa94"
+                }
+            ]
+        },
+        {
+            id: "q10",
+            question: "Who was the captain of the Indian team during the first World Cup in England in 1975?",
+            correct_answer : "qa101",
+            answers : [
+                {
+                    value: "S.Venkataraghavan",
+                    id: "qa101"
+                },
+                {
+                    value: "Abid Ali",
+                    id: "qa102"
+                },
+                {
+                    value: "Sunil Gavaskar",
+                    id: "qa103"
+                },
+                {
+                    value: "Gundappa Vishwanath",
+                    id: "qa104"
                 }
             ]
         }
@@ -186,13 +321,13 @@ function scoreCardController ($location, masterFactory, $filter, $uibModal, $sco
             $location.path('/home');
         } else {
             if (sc.result.total === sc.result.correct) {
-                sc.message = "All answers correct";
+                sc.message = "All answers correct!";
                 sc.icon = "http://im.rediff.com/cricket/2012/aug/26pic1.jpg";
             } else if (sc.result.correct > sc.result.incorrect) {
-                sc.message = "Almost there";
+                sc.message = "Almost there...";
                 sc.icon = "http://images.indianexpress.com/2016/11/saharunoutfbl.jpg";
             } else {
-                sc.message = "Better luck next time";
+                sc.message = "Better luck next time :(";
                 sc.icon = "http://www.umpiretraining.co.uk/images/eLearning/Bowled/bowled_3.jpg";
             }
             var ctx = document.getElementById("myChart");
