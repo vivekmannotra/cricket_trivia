@@ -1,4 +1,8 @@
 <style>
+    .option {
+        width: 100%;
+        padding: 10px;
+    }
     .option:hover {
         color: #ffffff;
         background: #353535;
@@ -10,7 +14,7 @@
     }
 </style>
 <div class="row" style="margin: 0;" data-ng-controller="landPadController as lp">
-    <div class="col-md-12" style="background: #e1e1e1;">
+    <div class="col-md-12" id="top" style="background: #e1e1e1;">
         <div class="col-md-8" style="margin: auto;float: none; background: #222222;">
             <div class="row" style="margin: 0;">
                 <div class="col-md-12" style="padding: 40px 30px;">
@@ -45,9 +49,9 @@
                                 </p>
                             </div>
                             <div class="col-md-6" data-ng-repeat="answer in question.answers">
-                                <div class="row option" style="margin: 0;padding: 0 30px;">
+                                <div class="row" style="margin: 0;padding: 0 30px;">
                                     <div class="radio">
-                                        <label>
+                                        <label class="option">
                                             <input type="radio" data-ng-change="lp.checkQuestion(question)" data-ng-model="question.user_answer" data-ng-value="answer.id">{{answer.value}}
                                         </label>
                                     </div>

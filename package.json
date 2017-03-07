@@ -10,7 +10,6 @@
     "body-parser": "^1.15.2",
     "connect-livereload": "^0.5.4",
     "express": "^4.14.0",
-    "nodemailer": "^3.1.4",
     "require": "^2.4.20"
   }
 }

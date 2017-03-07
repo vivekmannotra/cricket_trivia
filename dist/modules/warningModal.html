@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h1 class="modal-title">
+        <span class="fa fa-warning"></span>
+        Warning
+        <span style="font-size: 14px;cursor: pointer;" class="glyphicon glyphicon-remove pull-right active-btn" data-ng-click="$close()"></span>
+    </h1>
+</div>
+<div class="modal-body">
+    <div class="row" style="margin: 0;padding: 0 20px;">
+        <div class="col-md-12" style="padding: 10px 0;">
+            <p>Are you sure you want to start over?</p>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-info not-round" type="button" data-ng-click="$close()">No</button>
+    <button class="btn btn-danger not-round" type="button" data-ng-click="$close('confirm')">Yes</button>
+</div>

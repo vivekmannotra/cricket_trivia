@@ -1,5 +1,5 @@
 'use strict';
-angular.module('index', ['ui.bootstrap', 'index.landPad', 'index.scoreCard', 'ngRoute', 'chart.js', 'truncate']);
+angular.module('index', ['ui.bootstrap', 'index.landPad', 'index.scoreCard', 'ngRoute', 'chart.js']);
 angular.module('index.landPad', []);
 angular.module('index.landPad').controller('landPadController', landPadController);
 landPadController.$inject = ['$location', 'masterFactory', '$filter', '$uibModal', '$scope', '$route', '$rootScope', '$anchorScroll'];
@@ -116,7 +116,7 @@ function landPadController ($location, masterFactory, $filter, $uibModal, $scope
             var old = $location.hash();
             first_offender.first_off = 1;
             $location.hash(first_offender.id);
-            $anchorScroll.yOffset = "50px";
+            $anchorScroll.yOffset = 50;
             $anchorScroll();
             $location.hash(old);
         } else {
@@ -137,6 +137,12 @@ function landPadController ($location, masterFactory, $filter, $uibModal, $scope
             } else {
                 result.incorrect ++;
             }
+            lp.questions[i].correct_answer_full = _.find(lp.questions[i].answers, function (item) {
+                return item.id === lp.questions[i].correct_answer;
+            });
+            lp.questions[i].user_answer_full = _.find(lp.questions[i].answers, function (item) {
+                return item.id === lp.questions[i].user_answer;
+            });
         }
         result.answer_sheet = angular.copy(lp.questions);
         return result;
@@ -148,7 +154,25 @@ function landPadController ($location, masterFactory, $filter, $uibModal, $scope
         }
     };
     lp.resetForm = function () {
-
+        lp.resetModal = $uibModal.open({
+            templateUrl: 'modules/warningModal.html',
+            scope: $scope,
+            size: 'md'
+        });
+        lp.resetModal.result.then(function (response){
+            if (response === 'confirm') {
+                for (var i in lp.questions) {
+                    lp.questions[i].user_answer = null;
+                    lp.questions[i].warn = null;
+                    lp.questions[i].first_off = null;
+                }
+                var old = $location.hash();
+                $location.hash('top');
+                $anchorScroll.yOffset = 0;
+                $anchorScroll();
+                $location.hash(old);
+            }
+        });
     };
 }
 angular.module('index.scoreCard', []);
@@ -161,15 +185,45 @@ function scoreCardController ($location, masterFactory, $filter, $uibModal, $sco
         if (!sc.result) {
             $location.path('/home');
         } else {
-            sc.charts = {
-                bar: {
-                    labels: ['Correct', 'Incorrect'],
-                    series: ['Correct', 'Incorrect'],
-                    data: [
-                        [sc.result.correct, sc.result.incorrect]
-                    ]
-                }
+            if (sc.result.total === sc.result.correct) {
+                sc.message = "All answers correct";
+                sc.icon = "http://im.rediff.com/cricket/2012/aug/26pic1.jpg";
+            } else if (sc.result.correct > sc.result.incorrect) {
+                sc.message = "Almost there";
+                sc.icon = "http://images.indianexpress.com/2016/11/saharunoutfbl.jpg";
+            } else {
+                sc.message = "Better luck next time";
+                sc.icon = "http://www.umpiretraining.co.uk/images/eLearning/Bowled/bowled_3.jpg";
             }
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Correct", "Incorrect"],
+                    datasets: [{
+                        label: '# of Questions',
+                        data: [sc.result.correct, sc.result.incorrect],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255,99,132,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
         }
     }
     activate ();
@@ -205,91 +259,6 @@ angular.module('index').factory('masterFactory', ['$http', '$location', function
         getEmail : getEmail
     }
 }]);
-angular.module('index').filter('compoundFilter', ['$filter', function ($filter) {
-    return function (array, text) {
-        if (text) {
-            var list = text.split(' ');
-            for (var i = 0; i < list.length; i++) {
-                array = $filter('filter')(array, list[i]);
-            }
-        }
-        return array;
-    };
-}]);
 angular.module('index').run(['$http', '$rootScope', '$uibModal', 'masterFactory', function ($http, $rootScope, $uibModal, masterFactory) {
     $http.defaults.headers.common['Content-Type'] = 'application/json';
-    $rootScope.showMailModal = function (key) {
-        $rootScope.mailType = key;
-        $rootScope.selectedTemplate = (key === 'IMS') ? 'modules/mailTemplates/sample_invoice.html':'modules/mailTemplates/sample_promotion.html';
-        $rootScope.mailModal = $uibModal.open({
-            templateUrl: 'modules/mailModal.html',
-            scope: $rootScope,
-            size: 'lg'
-        });
-        $rootScope.mailModal.result.then(function (response){
-
-        });
-    };
-    $rootScope.sendEmail = function (toEmail) {
-        masterFactory.getEmail({
-            to: toEmail,
-            type: $rootScope.mailType
-        }).then(function (response) {
-            if (response.data.status === 'success') {
-                alert('Email has been sent!');
-                $rootScope.mailModal.close();
-            }
-        }).catch(function (error) {
-            alert('Error occured while trying to send mail!');
-        });
-    }
 }]);
-angular.module('truncate', [])
-    .filter('characters', function () {
-        return function (input, chars, breakOnWord) {
-            if (isNaN(chars)) return input;
-            if (chars <= 0) return '';
-            if (input && input.length > chars) {
-                input = input.substring(0, chars);
-
-                if (!breakOnWord) {
-                    var lastspace = input.lastIndexOf(' ');
-                    //get last space
-                    if (lastspace !== -1) {
-                        input = input.substr(0, lastspace);
-                    }
-                }else{
-                    while(input.charAt(input.length-1) === ' '){
-                        input = input.substr(0, input.length -1);
-                    }
-                }
-                return input + '…';
-            }
-            return input;
-        };
-    })
-    .filter('splitcharacters', function() {
-        return function (input, chars) {
-            if (isNaN(chars)) return input;
-            if (chars <= 0) return '';
-            if (input && input.length > chars) {
-                var prefix = input.substring(0, chars/2);
-                var postfix = input.substring(input.length-chars/2, input.length);
-                return prefix + '...' + postfix;
-            }
-            return input;
-        };
-    })
-    .filter('words', function () {
-        return function (input, words) {
-            if (isNaN(words)) return input;
-            if (words <= 0) return '';
-            if (input) {
-                var inputWords = input.split(/\s+/);
-                if (inputWords.length > words) {
-                    input = inputWords.slice(0, words).join(' ') + '…';
-                }
-            }
-            return input;
-        };
-    });

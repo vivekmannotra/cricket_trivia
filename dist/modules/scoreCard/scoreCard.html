@@ -15,10 +15,30 @@
                     <p style="color: #fff;font-size: 24px;">Correct Answers : {{sc.result.correct}}</p>
                     <p style="color: #fff;font-size: 24px;">Incorrect Answers : {{sc.result.incorrect}}</p>
                 </div>
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <p style="color: #fff;font-size: 36px;">{{sc.message}}</p>
+                    <p><img src="{{sc.icon}}" width="300px"></p>
+                </div>
                 <div class="col-md-8" style="padding: 40px 30px;">
                     <div class="row" style="margin: 0;background: #fff;padding: 30px;">
-                        <canvas id="bar" class="chart chart-bar"
-                                chart-data="sc.charts.bar.data" chart-labels="sc.charts.bar.labels" chart-series="sc.charts.bar.series"></canvas>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-12" style="padding: 40px 30px;">
+                    <button class="btn btn-primary not-round" data-ng-click="sc.showAnswers = !sc.showAnswers;">
+                        {{sc.showAnswers ? 'Hide':'Show'}} Answers
+                    </button>
+                </div>
+                <div class="col-md-12" data-ng-if="sc.showAnswers" style="padding: 40px 30px;">
+                    <div class="row" style="margin : 0;">
+                        <p style="color: #ffffff;font-size: 36px;">Answer Sheet</p>
+                    </div>
+                    <div class="row" style="margin: 0;background: #fff;" data-ng-repeat="question in sc.result.answer_sheet">
+                        <div class="col-md-12" style="padding: 20px 15px;">
+                            <p style="color: #2e2e2e;font-size: 18px;">#{{$index + 1}} - {{question.question}}</p>
+                            <div class="alert alert-{{(question.user_answer === question.correct_answer) ? 'success':'danger'}}" role="alert">Your Answer : {{question.user_answer_full.value}}</div>
+                            <div data-ng-if="(question.user_answer !== question.correct_answer)" class="alert alert-success" role="alert">Correct Answer : {{question.correct_answer_full.value}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12" style="padding: 40px 30px;">
