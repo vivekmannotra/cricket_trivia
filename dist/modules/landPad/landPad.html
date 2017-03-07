@@ -14,7 +14,7 @@
     }
 </style>
 <div class="row" style="margin: 0;" data-ng-controller="landPadController as lp">
-    <div class="col-md-12" id="top" style="background: #e1e1e1;">
+    <div class="col-md-12" id="top" style="background: #e1e1e1;padding:0;">
         <div class="col-md-8" style="margin: auto;float: none; background: #222222;">
             <div class="row" style="margin: 0;">
                 <div class="col-md-12" style="padding: 40px 30px;">
@@ -60,8 +60,8 @@
                         </div>
                     </div>
                     <div class="col-md-12" style="padding: 20px 30px 50px 30px;">
-                        <button class="btn btn-warning not-round btn-lg pull-left" data-ng-click="lp.resetForm()"><span class="fa fa-repeat"></span> Reset</button>
-                        <button class="btn btn-primary not-round btn-lg pull-right" data-ng-click="lp.evaluate()"><span class="fa fa-pencil-square-o"></span> Get Result</button>
+                        <button class="btn btn-warning not-round btn-lg pull-left" style="margin: 10px;" data-ng-click="lp.resetForm()"><span class="fa fa-repeat"></span> Reset</button>
+                        <button class="btn btn-primary not-round btn-lg pull-right" style="margin: 10px;" data-ng-click="lp.evaluate()"><span class="fa fa-pencil-square-o"></span> Get Result</button>
                     </div>
                 </div>
             </form>
